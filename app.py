@@ -50,7 +50,7 @@ st.markdown("""
     justify-content: center;
 
     width: 100%;
-    height: 60px;
+    height: 40px;
 
     font-size: 22px;
     font-weight: 600;
