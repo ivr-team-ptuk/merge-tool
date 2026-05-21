@@ -2,6 +2,8 @@ import streamlit as st
 import fitz
 import io
 
+from streamlit_sortables import sort_items
+
 # =========================
 # PAGE CONFIG
 # =========================
@@ -12,10 +14,10 @@ st.set_page_config(
 )
 
 st.title("دمج ملفات PDF")
-st.caption("قم بترتيب الملفات ثم دمجها في ملف واحد")
+st.caption("اسحب الملفات لتغيير ترتيبها ثم قم بالدمج")
 
 # =========================
-# UPLOAD FILES
+# FILE UPLOAD
 # =========================
 
 uploaded_pdfs = st.file_uploader(
@@ -25,20 +27,32 @@ uploaded_pdfs = st.file_uploader(
 )
 
 # =========================
-# FILE ORDERING
+# MAIN
 # =========================
 
 if uploaded_pdfs:
 
     st.subheader("ترتيب الملفات")
 
-    file_names = [file.name for file in uploaded_pdfs]
+    # =========================
+    # FILE NAMES
+    # =========================
 
-    ordered_files = st.multiselect(
-        "اختر الترتيب النهائي للملفات",
-        options=file_names,
-        default=file_names
+    file_names = [
+        file.name
+        for file in uploaded_pdfs
+    ]
+
+    # =========================
+    # DRAG & DROP SORT
+    # =========================
+
+    sorted_names = sort_items(
+        file_names,
+        direction="vertical"
     )
+
+    st.divider()
 
     # =========================
     # OUTPUT FILE NAME
@@ -55,69 +69,63 @@ if uploaded_pdfs:
 
     if st.button("دمج وتحميل"):
 
-        if len(ordered_files) != len(file_names):
+        merged_doc = fitz.open()
 
-            st.error("يجب اختيار جميع الملفات")
+        progress = st.progress(0)
 
-        else:
+        total = len(sorted_names)
 
-            merged_doc = fitz.open()
+        # =========================
+        # MERGE FILES
+        # =========================
 
-            progress = st.progress(0)
+        for index, selected_name in enumerate(sorted_names):
 
-            total = len(ordered_files)
+            for uploaded_file in uploaded_pdfs:
 
-            # =========================
-            # MERGE FILES
-            # =========================
+                if uploaded_file.name == selected_name:
 
-            for index, selected_name in enumerate(ordered_files):
+                    pdf_bytes = uploaded_file.getvalue()
 
-                for uploaded_file in uploaded_pdfs:
+                    pdf_doc = fitz.open(
+                        stream=pdf_bytes,
+                        filetype="pdf"
+                    )
 
-                    if uploaded_file.name == selected_name:
+                    merged_doc.insert_pdf(pdf_doc)
 
-                        pdf_bytes = uploaded_file.getvalue()
+                    pdf_doc.close()
 
-                        pdf_doc = fitz.open(
-                            stream=pdf_bytes,
-                            filetype="pdf"
-                        )
+                    break
 
-                        merged_doc.insert_pdf(pdf_doc)
-
-                        pdf_doc.close()
-
-                        break
-
-                progress.progress(
-                    (index + 1) / total
-                )
-
-            # =========================
-            # SAVE OUTPUT
-            # =========================
-
-            output_buffer = io.BytesIO()
-
-            merged_doc.save(output_buffer)
-
-            output_buffer.seek(0)
-
-            merged_doc.close()
-
-            # =========================
-            # DOWNLOAD
-            # =========================
-
-            st.download_button(
-                label="تحميل الملف المدمج",
-                data=output_buffer,
-                file_name=f"{output_name}.pdf",
-                mime="application/pdf"
+            progress.progress(
+                (index + 1) / total
             )
 
-            st.success("تم الدمج بنجاح 🔥")
+        # =========================
+        # SAVE OUTPUT
+        # =========================
+
+        output_buffer = io.BytesIO()
+
+        merged_doc.save(output_buffer)
+
+        output_buffer.seek(0)
+
+        merged_doc.close()
+
+        # =========================
+        # DOWNLOAD BUTTON
+        # =========================
+
+        st.download_button(
+            label="تحميل الملف المدمج",
+            data=output_buffer,
+            file_name=f"{output_name}.pdf",
+            mime="application/pdf"
+        )
+
+        st.success("تم الدمج بنجاح 🔥")
 
 else:
 
