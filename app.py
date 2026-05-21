@@ -13,6 +13,60 @@ st.set_page_config(
     layout="centered"
 )
 
+st.markdown("""
+<style>
+
+/* =========================
+   FILE UPLOADER BOX
+========================= */
+
+[data-testid="stFileUploader"] {
+    border: 2px dashed #999;
+    border-radius: 18px;
+    padding: 35px;
+    background-color: rgba(255,255,255,0.02);
+}
+
+/* تكبير المنطقة الداخلية */
+
+[data-testid="stFileUploaderDropzone"] {
+    padding: 40px;
+}
+
+/* إخفاء النص الافتراضي */
+
+[data-testid="stFileUploaderDropzone"] div div div span {
+    display: none;
+}
+
+/* إضافة نص مخصص */
+
+[data-testid="stFileUploaderDropzone"]::before {
+
+    content: "📥 اسحب ملفات PDF إلى هنا أو اضغط للاختيار";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 120px;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    color: #888;
+}
+
+/* تحسين الزر */
+
+[data-testid="stBaseButton-secondary"] {
+    border-radius: 12px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 st.title("دمج ملفات PDF")
 st.caption("اسحب الملفات لتغيير ترتيبها ثم قم بالدمج")
 
