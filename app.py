@@ -110,6 +110,30 @@ if uploaded_pdfs:
     st.divider()
 
     # =========================
+    # BOOKMARK OPTION
+    # =========================
+
+    add_bookmarks = st.checkbox(
+        "إضافة علامات مرجعية",
+        value=True
+    )
+
+    bookmark_titles = {}
+
+    if add_bookmarks:
+
+        st.subheader("أسماء العلامات المرجعية")
+
+        for file_name in sorted_names:
+
+            clean_name = file_name.replace(".pdf", "")
+
+            bookmark_titles[file_name] = st.text_input(
+                f"علامة: {file_name}",
+                value=clean_name
+            )
+
+    # =========================
     # OUTPUT FILE NAME
     # =========================
 
@@ -133,7 +157,10 @@ if uploaded_pdfs:
         # =========================
         # MERGE FILES
         # =========================
-
+        
+        toc = []
+        current_page = 1
+        
         for index, selected_name in enumerate(sorted_names):
 
             for uploaded_file in uploaded_pdfs:
@@ -149,6 +176,22 @@ if uploaded_pdfs:
 
                     merged_doc.insert_pdf(pdf_doc)
 
+                    # =========================
+                    # BOOKMARK
+                    # =========================
+
+                    if add_bookmarks:
+
+                        bookmark_title = bookmark_titles[selected_name]
+
+                        toc.append([
+                            1,
+                            bookmark_title,
+                            current_page
+                        ])
+
+                    current_page += len(pdf_doc)
+
                     pdf_doc.close()
 
                     break
@@ -156,6 +199,9 @@ if uploaded_pdfs:
             progress.progress(
                 (index + 1) / total
             )
+
+        if add_bookmarks and toc:
+            merged_doc.set_toc(toc)
 
         # =========================
         # SAVE OUTPUT
