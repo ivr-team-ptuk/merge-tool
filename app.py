@@ -21,9 +21,10 @@ st.caption("اسحب الملفات لتغيير ترتيبها ثم قم بال
 # =========================
 
 uploaded_pdfs = st.file_uploader(
-    "رفع ملفات PDF",
+    "اسحب ملفات PDF هنا أو اضغط للاختيار",
     type=["pdf"],
-    accept_multiple_files=True
+    accept_multiple_files=True,
+    help="يمكنك رفع عدة ملفات دفعة واحدة"
 )
 
 # =========================
