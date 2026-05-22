@@ -115,6 +115,8 @@ function toggleNavbar() {{
         </div>
 
     </div>
+</div>
+
 <script>
 
 function toggleNavbar() {{
