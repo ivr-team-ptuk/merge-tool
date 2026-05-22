@@ -143,7 +143,7 @@ function toggleNavbar() {{
 # RENDER HTML
 # =========================
 
-components.html( html_content, height=00 )
+components.html( html_content, height=50 )
 
 # =========================
 # HEADER
