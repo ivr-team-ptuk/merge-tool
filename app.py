@@ -42,7 +42,7 @@ iframe{
 # LOAD CSS FILE
 # =========================
 
-with open("style.css", encoding="utf-8") as f:
+with open("styles\style.css", encoding="utf-8") as f:
     css = f.read()
 
 # =========================
