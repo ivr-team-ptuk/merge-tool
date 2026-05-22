@@ -215,6 +215,58 @@ p, span, label {
 }
 
 /* =========================
+TOGGLE BUTTON
+========================= */
+
+.nav-toggle{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+
+    z-index:10000;
+
+    width:46px;
+    height:46px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:20px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(12px);
+
+    transition:0.25s;
+}
+
+.nav-toggle:hover{
+
+    background:rgba(255,255,255,0.14);
+}
+
+/* =========================
+STICKY NAVBAR WRAPPER
+========================= */
+
+.ivr-navbar-wrapper{
+    position:sticky;
+    top:10px;
+
+    z-index:9999;
+
+    transition:0.3s;
+}
+
+/* =========================
 NAVBAR
 ========================= */
 
