@@ -1,7 +1,7 @@
 import streamlit as st
 import fitz
 import io
-
+import streamlit.components.v1 as components
 from streamlit_sortables import sort_items
 
 # =========================
@@ -15,29 +15,120 @@ st.set_page_config(
 )
 
 # =========================
-# LOAD CSS
+# HIDE STREAMLIT DEFAULT UI
 # =========================
 
-with open("styles/style.css", encoding="utf-8") as f:
+st.markdown("""
+<style>
 
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True
-    )
+#MainMenu,
+header,
+footer{
+    visibility:hidden;
+}
+
+.block-container{
+    padding:0;
+}
+
+iframe{
+    border:none !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =========================
+# LOAD CSS FILE
+# =========================
+
+with open("style.css", encoding="utf-8") as f:
+    css = f.read()
 
 # =========================
 # LAYOUT
 # =========================
 
-# ROW 1 - NAVBAR
-st.markdown("""
-<div class="ivr-navbar">
-    <a href="https://ivr-home-page.streamlit.app" target="_blank">Home</a>
-    <a href="https://ivr-merge-tool.streamlit.app" target="_blank">Merge PDF</a>
-    <a href="https://ivr-watermark-tool.streamlit.app" target="_blank">Watermark PDF</a>
-    <a href="https://ivr-imagetopdf-tool.streamlit.app" target="_blank">Image to PDF</a>
-</div>
-""", unsafe_allow_html=True)
+# =========================
+# HTML CONTENT
+# =========================
+
+html_content = f"""
+
+<style>
+{css}
+</style>
+
+<script>
+
+function toggleNavbar() {{
+
+    const navbar =
+        document.getElementById("navbarWrapper");
+
+    navbar.classList.toggle("collapsed");
+}}
+
+</script>
+
+<div class="page-wrapper">
+
+    <!-- NAVBAR -->
+    <div class="ivr-navbar-wrapper" id="navbarWrapper">
+
+
+            <!-- TOGGLE BUTTON -->
+
+            <button class="nav-toggle" onclick="toggleNavbar()">
+                ☰
+            </button>
+
+        <div class="ivr-navbar">
+
+            <a href="https://ivr-home-page.streamlit.app"
+            class="nav-logo">
+                <img
+                    src="https://raw.githubusercontent.com/ivr-team-ptuk/home-page/main/Black_Square-01.svg"
+                    class="nav-logo-img"
+                >
+            </a>
+
+            <div class="nav-links">
+
+
+                <a href="https://ivr-watermark-tool.streamlit.app" target="_blank">
+                    تعليم الملفات
+                </a>
+
+                <a href="https://ivr-merge-tool.streamlit.app" target="_blank">
+                    دمج الملفات
+                </a>
+
+                <a href="https://ivr-imagetopdf-tool.streamlit.app" target="_blank">
+                    الصور إلى PDF
+                </a>
+
+                <a href="" target="_blank"></a>
+
+            </div>
+
+        </div>
+
+    </div>
+<script>
+
+function toggleNavbar() {{
+
+    const navbar =
+        document.getElementById("navbarWrapper");
+
+    navbar.classList.toggle("collapsed");
+}}
+
+</script>
+
+"""
+components.html( html_content, height=950, scrolling=True )
 
 # =========================
 # HEADER

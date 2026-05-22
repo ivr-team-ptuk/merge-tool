@@ -218,88 +218,63 @@ p, span, label {
 NAVBAR
 ========================= */
 
-.ivr-navbar {
+.ivr-navbar{
+    display:flex;
 
-    position: fixed;
-    top: 50px;
-    left: 0;
-    right: 0;
+    justify-content:space-between;
+    align-items:center;
 
-    z-index: 9999;
+    gap:20px;
 
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    padding:18px 24px;
+    margin-bottom:40px;
 
-    padding: 14px 18px;
+    border-radius:20px;
 
-    border-radius: 0 0 18px 18px;
+    background:rgba(255,255,255,0.06);
 
-    background: rgba(255,255,255,0.05);
+    border:1px solid var(--border);
 
-    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px);
 
-    backdrop-filter: blur(12px);
+    transition:0.3s;
 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-}
-
-.ivr-navbar a {
-
-    text-decoration: none;
-
-    color: white;
-
-    font-weight: 700;
-
-    padding: 10px 18px;
-
-    border-radius: 12px;
-
-    transition: 0.2s;
-
-    background: transparent;
-}
-
-.ivr-navbar a:hover {
-
-    background: rgba(255,255,255,0.08);
-
-    color: #FF5B04;
-
-    transform: translateY(-1px);
-}
-
-.ivr-navbar a {
-    display: inline-block;
+    overflow:hidden;
 }
 
 /* =========================
-NAVBAR
+COLLAPSED NAVBAR
 ========================= */
 
-.ivr-navbar {
+.ivr-navbar-wrapper.collapsed .ivr-navbar{
+
+    opacity:0;
+
+    transform:translateY(-20px);
+
+    max-height:0;
+
+    padding-top:0;
+    padding-bottom:0;
+
+    margin-bottom:0;
+
+    border:none;
+
+    overflow:hidden;
+}
+
+/* =========================
+NAVBAR CONTENT
+========================= */
+
+.nav-logo {
 
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
 
-    padding: 18px 24px;
-
-    margin-bottom: 20px;
-
-    border-radius: 20px;
-
-    background: rgba(255,255,255,0.05);
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter: blur(12px);
-}
-
-.nav-logo {
+    gap: 12px;
 
     font-size: 22px;
 
@@ -308,32 +283,36 @@ NAVBAR
     color: white;
 }
 
-.nav-links {
-
-    display: flex;
-
-    gap: 12px;
+.nav-logo-img {
+    width: 85px;
+    height: 42px;
+    object-fit: contain;
 }
 
-.nav-links a {
-
-    text-decoration: none;
-
-    color: white;
-
-    padding: 10px 18px;
-
-    border-radius: 12px;
-
-    transition: 0.2s;
+.nav-links{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
-.nav-links a:hover {
+.nav-links a{
+    text-decoration:none;
 
-    background: rgba(255,255,255,0.08);
+    color:white;
 
-    color: #FF5B04;
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    transition:0.2s;
 }
+
+.nav-links a:hover{
+    background:rgba(255,255,255,0.08);
+    color:var(--primary);
+}
+
+
 
 /* =========================
 MOBILE
