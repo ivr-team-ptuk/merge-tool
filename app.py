@@ -149,7 +149,6 @@ components.html( html_content, height=100 )
 # HEADER
 # =========================
 
-st.title("")
 st.title("دمج ملفات PDF")
 st.caption(
     "اسحب الملفات لتغيير ترتيبها ثم قم بالدمج"
