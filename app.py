@@ -52,8 +52,10 @@ st.markdown("""
 # =========================
 
 st.title("")
-st.title("تحويل الصور إلى PDF")
-st.caption("ارفع الصور ثم قم بترتيبها وتحويلها إلى PDF")
+st.title("دمج ملفات PDF")
+st.caption(
+    "اسحب الملفات لتغيير ترتيبها ثم قم بالدمج"
+)
 
 controls_col, preview_col = st.columns(
     [1, 1.1]
