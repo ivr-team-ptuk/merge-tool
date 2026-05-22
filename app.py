@@ -15,6 +15,17 @@ st.set_page_config(
 )
 
 # =========================
+# LOAD CSS
+# =========================
+
+with open("styles/style.css", encoding="utf-8") as f:
+
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True
+    )
+
+# =========================
 # HIDE STREAMLIT DEFAULT UI
 # =========================
 
@@ -42,12 +53,8 @@ iframe{
 # LOAD CSS FILE
 # =========================
 
-with open("styles/style.css", encoding="utf-8") as f:
+with open("style.css", encoding="utf-8") as f:
     css = f.read()
-
-# =========================
-# LAYOUT
-# =========================
 
 # =========================
 # HTML CONTENT
@@ -115,6 +122,7 @@ function toggleNavbar() {{
         </div>
 
     </div>
+
 </div>
 
 <script>
@@ -130,6 +138,11 @@ function toggleNavbar() {{
 </script>
 
 """
+
+# =========================
+# RENDER HTML
+# =========================
+
 components.html( html_content, height=950, scrolling=True )
 
 # =========================
