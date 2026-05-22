@@ -401,11 +401,10 @@ MOBILE
 FOOTER
 ========================= */
 
-.footer {
+.footer{
+    text-align:center;
 
-    text-align: center;
+    padding:60px 0 20px;
 
-    padding: 40px 0 10px 0;
-
-    color: rgba(255,255,255,0.5);
+    color:rgba(255,255,255,0.5);
 }
