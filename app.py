@@ -37,6 +37,24 @@ st.caption(
 # LAYOUT
 # =========================
 
+# ROW 1 - NAVBAR
+st.markdown("""
+<div class="ivr-navbar">
+    <a href="https://ivr-home.streamlit.app" target="_blank">Home</a>
+    <a href="https://ivr-merge-tool.streamlit.app" target="_blank">Merge PDF</a>
+    <a href="https://ivr-watermark-tool.streamlit.app" target="_blank">Watermark PDF</a>
+    <a href="https://ivr-imagetopdf-tool.streamlit.app" target="_blank">Image to PDF</a>
+</div>
+""", unsafe_allow_html=True)
+
+# =========================
+# HEADER
+# =========================
+
+st.title("")
+st.title("تحويل الصور إلى PDF")
+st.caption("ارفع الصور ثم قم بترتيبها وتحويلها إلى PDF")
+
 controls_col, preview_col = st.columns(
     [1, 1.1]
 )
