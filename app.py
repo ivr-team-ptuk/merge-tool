@@ -321,3 +321,15 @@ with preview_col:
         '</div>',
         unsafe_allow_html=True
     )
+
+# =========================
+# FOOTER
+# =========================
+
+st.markdown("""
+<div class="footer">
+
+    IVR Engineering Society © 2026
+
+</div>
+""", unsafe_allow_html=True)
