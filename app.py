@@ -10,6 +10,7 @@ from streamlit_sortables import sort_items
 
 st.set_page_config(
     page_title="دمج ملفات PDF - IVR",
+    page_icon="Black_Square-01.svg",
     layout="wide"
 )
 
