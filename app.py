@@ -178,12 +178,16 @@ with preview_col:
             )
             total_pages = len(preview_doc)
 
-            page_num = st.slider(
-                "الصفحة",
-                min_value=1,
-                max_value=total_pages,
-                value=1
-            )
+            if total_pages > 1:
+                page_num = st.slider(
+                    "الصفحة",
+                    min_value=1,
+                    max_value=total_pages,
+                    value=1
+                )
+            else:
+                page_num = 1
+                st.caption("الملف يحتوي على صفحة واحدة فقط")
 
             page = preview_doc[page_num - 1]
             pix = page.get_pixmap(matrix=fitz.Matrix(1.5, 1.5))
