@@ -73,8 +73,8 @@ footer {
 
     background:      rgba(8, 57, 61, 0.92);
     border-bottom:   1px solid var(--border);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-logo {
