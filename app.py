@@ -1,7 +1,6 @@
 import streamlit as st
 import fitz
 import io
-import streamlit.components.v1 as components
 from streamlit_sortables import sort_items
 
 # =========================
@@ -15,158 +14,61 @@ st.set_page_config(
 )
 
 # =========================
-# LOAD CSS
+# CONSTANTS
+# =========================
+
+LOGO_URL = (
+    "https://raw.githubusercontent.com/"
+    "ivr-team-ptuk/home-page/main/Black_Square-01.svg"
+)
+
+# =========================
+# CSS
 # =========================
 
 with open("styles/style.css", encoding="utf-8") as f:
-
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True
-    )
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # =========================
-# HIDE STREAMLIT DEFAULT UI
+# NAVBAR (fixed via CSS — no iframe needed)
 # =========================
 
-st.markdown("""
-<style>
-
-#MainMenu,
-header,
-footer{
-    visibility:hidden;
-}
-
-.block-container{
-    padding:0;
-}
-
-iframe{
-    border:none !important;
-}
-
-</style>
+st.markdown(f"""
+<nav class="ivr-navbar">
+    <a href="https://ivr-home-page.streamlit.app" class="nav-logo">
+        <img src="{LOGO_URL}" class="nav-logo-img" alt="IVR">
+    </a>
+    <div class="nav-links">
+        <a href="https://ivr-watermark-tool.streamlit.app">تعليم الملفات</a>
+        <a href="https://ivr-merge-tool.streamlit.app">دمج الملفات</a>
+        <a href="https://ivr-imagetopdf-tool.streamlit.app">الصور إلى PDF</a>
+    </div>
+</nav>
 """, unsafe_allow_html=True)
 
 # =========================
-# LOAD CSS FILE
+# PAGE HEADER
 # =========================
 
-with open("styles/style.css", encoding="utf-8") as f:
-    css = f.read()
-
-# =========================
-# HTML CONTENT
-# =========================
-
-html_content = f"""
-
-<style>
-{css}
-</style>
-
-<script>
-
-function toggleNavbar() {{
-
-    const navbar =
-        document.getElementById("navbarWrapper");
-
-    navbar.classList.toggle("collapsed");
-}}
-
-</script>
-
-<div class="page-wrapper">
-
-    <!-- NAVBAR -->
-    <div class="ivr-navbar-wrapper" id="navbarWrapper">
-
-
-            <!-- TOGGLE BUTTON -->
-
-            <button class="nav-toggle" onclick="toggleNavbar()">
-                ☰
-            </button>
-
-        <div class="ivr-navbar">
-
-            <a href="https://ivr-home-page.streamlit.app" target="_blank"
-            class="nav-logo">
-                <img
-                    src="https://raw.githubusercontent.com/ivr-team-ptuk/home-page/main/Black_Square-01.svg"
-                    class="nav-logo-img"
-                >
-            </a>
-
-            <div class="nav-links">
-
-
-                <a href="https://ivr-watermark-tool.streamlit.app" target="_blank">
-                    تعليم الملفات
-                </a>
-
-                <a href="https://ivr-merge-tool.streamlit.app" target="_blank">
-                    دمج الملفات
-                </a>
-
-                <a href="https://ivr-imagetopdf-tool.streamlit.app" target="_blank">
-                    الصور إلى PDF
-                </a>
-
-                <a href="" target="_blank"></a>
-
-            </div>
-
-        </div>
-
-    </div>
-
+st.markdown(f"""
+<div class="page-header">
+    <img src="{LOGO_URL}" class="hero-logo" alt="IVR Logo">
+    <h1>دمج ملفات PDF</h1>
+    <p>اسحب الملفات لتغيير ترتيبها ثم قم بالدمج</p>
 </div>
-
-<script>
-
-function toggleNavbar() {{
-
-    const navbar =
-        document.getElementById("navbarWrapper");
-
-    navbar.classList.toggle("collapsed");
-}}
-
-</script>
-
-"""
+""", unsafe_allow_html=True)
 
 # =========================
-# RENDER HTML
+# LAYOUT
 # =========================
 
-components.html( html_content, height=100 )
+controls_col, preview_col = st.columns([1, 1.1])
 
 # =========================
-# HEADER
-# =========================
-
-st.title("دمج ملفات PDF")
-st.caption(
-    "اسحب الملفات لتغيير ترتيبها ثم قم بالدمج"
-)
-
-controls_col, preview_col = st.columns(
-    [1, 1.1]
-)
-
-# =========================
-# LEFT SIDE
+# LEFT COLUMN — CONTROLS
 # =========================
 
 with controls_col:
-
-    # =========================
-    # FILE UPLOAD
-    # =========================
 
     uploaded_pdfs = st.file_uploader(
         "اسحب ملفات PDF هنا أو اضغط للاختيار",
@@ -175,37 +77,16 @@ with controls_col:
         help="يمكنك رفع عدة ملفات دفعة واحدة"
     )
 
-    # =========================
-    # MAIN
-    # =========================
-
     if uploaded_pdfs:
 
         st.subheader("ترتيب الملفات")
 
-        # =========================
-        # FILE NAMES
-        # =========================
-
-        file_names = [
-            file.name
-            for file in uploaded_pdfs
-        ]
-
-        # =========================
-        # DRAG & DROP SORT
-        # =========================
-
         sorted_names = sort_items(
-            file_names,
+            [f.name for f in uploaded_pdfs],
             direction="vertical"
         )
 
         st.divider()
-
-        # =========================
-        # BOOKMARK OPTION
-        # =========================
 
         add_bookmarks = st.checkbox(
             "إضافة علامات مرجعية",
@@ -216,144 +97,71 @@ with controls_col:
 
         if add_bookmarks:
 
-            st.subheader(
-                "أسماء العلامات المرجعية"
-            )
+            st.subheader("أسماء العلامات المرجعية")
 
-            for file_name in sorted_names:
-
-                clean_name = file_name.replace(
-                    ".pdf",
-                    ""
+            for name in sorted_names:
+                bookmark_titles[name] = st.text_input(
+                    f"علامة: {name}",
+                    value=name.removesuffix(".pdf")
                 )
-
-                bookmark_titles[file_name] = st.text_input(
-                    f"علامة: {file_name}",
-                    value=clean_name
-                )
-
-        # =========================
-        # OUTPUT FILE NAME
-        # =========================
 
         output_name = st.text_input(
             "اسم الملف النهائي",
             value="merged_file"
         )
 
-        # =========================
-        # MERGE BUTTON
-        # =========================
-
         if st.button("دمج وتحميل"):
 
+            file_map = {f.name: f for f in uploaded_pdfs}
             merged_doc = fitz.open()
-
+            toc = []
+            current_page = 1
             progress = st.progress(0)
 
-            total = len(sorted_names)
+            for i, name in enumerate(sorted_names):
 
-            # =========================
-            # TOC
-            # =========================
+                if name not in file_map:
+                    continue
 
-            toc = []
-
-            current_page = 1
-
-            # =========================
-            # MERGE FILES
-            # =========================
-
-            for index, selected_name in enumerate(sorted_names):
-
-                for uploaded_file in uploaded_pdfs:
-
-                    if uploaded_file.name == selected_name:
-
-                        pdf_bytes = uploaded_file.getvalue()
-
-                        pdf_doc = fitz.open(
-                            stream=pdf_bytes,
-                            filetype="pdf"
-                        )
-
-                        merged_doc.insert_pdf(pdf_doc)
-
-                        # =========================
-                        # BOOKMARK
-                        # =========================
-
-                        if add_bookmarks:
-
-                            bookmark_title = bookmark_titles[
-                                selected_name
-                            ]
-
-                            toc.append([
-                                1,
-                                bookmark_title,
-                                current_page
-                            ])
-
-                        current_page += len(pdf_doc)
-
-                        pdf_doc.close()
-
-                        break
-
-                progress.progress(
-                    (index + 1) / total
+                pdf_doc = fitz.open(
+                    stream=file_map[name].getvalue(),
+                    filetype="pdf"
                 )
+                merged_doc.insert_pdf(pdf_doc)
 
-            # =========================
-            # SET TOC
-            # =========================
+                if add_bookmarks:
+                    toc.append([
+                        1,
+                        bookmark_titles.get(name, name),
+                        current_page
+                    ])
+
+                current_page += len(pdf_doc)
+                pdf_doc.close()
+                progress.progress((i + 1) / len(sorted_names))
 
             if add_bookmarks and toc:
-
                 merged_doc.set_toc(toc)
 
-            # =========================
-            # SAVE OUTPUT
-            # =========================
-
-            output_buffer = io.BytesIO()
-
-            merged_doc.save(output_buffer)
-
-            output_buffer.seek(0)
-
+            buf = io.BytesIO()
+            merged_doc.save(buf)
             merged_doc.close()
-
-            # =========================
-            # DOWNLOAD BUTTON
-            # =========================
+            buf.seek(0)
 
             st.download_button(
                 label="تحميل الملف المدمج",
-                data=output_buffer,
+                data=buf,
                 file_name=f"{output_name}.pdf",
                 mime="application/pdf"
             )
 
-            st.success(
-                "تم الدمج بنجاح 🔥"
-            )
+            st.success("تم الدمج بنجاح 🔥")
 
     else:
-
-        st.info(
-            "قم برفع ملفات PDF أولاً."
-        )
-
-    st.markdown(
-        '</div>',
-        unsafe_allow_html=True
-    )
+        st.info("قم برفع ملفات PDF أولاً.")
 
 # =========================
-# RIGHT SIDE
+# RIGHT COLUMN — PREVIEW
 # =========================
 
 with preview_col:
@@ -364,78 +172,35 @@ with preview_col:
 
         try:
 
-            preview_file = uploaded_pdfs[0]
-
             preview_doc = fitz.open(
-                stream=preview_file.getvalue(),
+                stream=uploaded_pdfs[0].getvalue(),
                 filetype="pdf"
             )
-
             total_pages = len(preview_doc)
 
-            col1, col2 = st.columns([3,1])
-
-            with col1:
-
-                preview_page_number = st.slider(
-                    "التنقل السريع",
-                    1,
-                    total_pages,
-                    1
-                )
-
-            with col2:
-
-                preview_page_number = st.number_input(
-                    "الصفحة",
-                    min_value=1,
-                    max_value=total_pages,
-                    value=preview_page_number,
-                    step=1
-                )
-
-            preview_page = preview_doc[
-                preview_page_number - 1
-            ]
-
-            pix = preview_page.get_pixmap(
-                matrix=fitz.Matrix(1.5, 1.5)
+            page_num = st.slider(
+                "الصفحة",
+                min_value=1,
+                max_value=total_pages,
+                value=1
             )
 
-            image_bytes = pix.tobytes("png")
-
-            st.image(
-                image_bytes,
-                use_container_width=True
-            )
-
+            page = preview_doc[page_num - 1]
+            pix = page.get_pixmap(matrix=fitz.Matrix(1.5, 1.5))
+            st.image(pix.tobytes("png"), use_container_width=True)
             preview_doc.close()
 
         except Exception as e:
-
-            st.error(
-                f"خطأ في المعاينة: {e}"
-            )
+            st.error(f"خطأ في المعاينة: {e}")
 
     else:
-
-        st.info(
-            "قم برفع ملف لرؤية المعاينة."
-        )
-
-    st.markdown(
-        '</div>',
-        unsafe_allow_html=True
-    )
+        st.info("قم برفع ملف لرؤية المعاينة.")
 
 # =========================
 # FOOTER
 # =========================
 
-st.markdown("""
-<div class="footer">
-
-    IVR Engineering Society © 2026
-
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="footer">IVR Engineering Society © 2026</div>',
+    unsafe_allow_html=True
+)
