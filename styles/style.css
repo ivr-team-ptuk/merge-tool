@@ -53,21 +53,6 @@ html, body, [data-testid="stAppViewContainer"] {
 }
 
 /* =========================
-PAGE WIDTH
-========================= */
-
-.block-container {
-
-    max-width: 1400px;
-
-    padding-left: 3rem;
-
-    padding-right: 3rem;
-
-    margin: auto;
-}
-
-/* =========================
 SIDEBAR
 ========================= */
 
@@ -89,7 +74,6 @@ CARDS
 .block-container {
 
     padding-top: 2rem;
-    z-index:9998;
 }
 
 .ivr-card {
@@ -122,7 +106,7 @@ BUTTONS
     background: var(--primary);
 
     color: white;
-    z-index:9998;
+
     font-weight: bold;
 
     padding: 14px;
@@ -145,7 +129,7 @@ INPUTS
 .stNumberInput input,
 .stTextArea textarea,
 .stSelectbox div[data-baseweb="select"] {
-    z-index:9998;
+
     background:
         rgba(255,255,255,0.06) !important;
 
@@ -162,7 +146,7 @@ UPLOAD AREA
 ========================= */
 
 [data-testid="stFileUploader"] {
-    z-index:9998;
+
     border:
         2px dashed rgba(255,255,255,0.18);
 
@@ -177,7 +161,7 @@ UPLOAD AREA
 }
 
 [data-testid="stFileUploader"]:hover {
-    z-index:9998;
+
     border-color: var(--primary);
 
     background:
@@ -193,7 +177,6 @@ SLIDER
     text-align: left !important;
     unicode-bidi: normal !important;
     padding-top: 10px;
-    z-index:9998;
 }
 
 /* =========================
@@ -201,7 +184,7 @@ PREVIEW
 ========================= */
 
 .preview-pane {
-    z-index:9998;
+
     background: rgba(255,255,255,0.04);
 
     border: 1px solid var(--border);
@@ -222,12 +205,12 @@ HEADERS
 ========================= */
 
 h1, h2, h3 {
-    z-index:9998;
+
     color: white;
 }
 
 p, span, label {
-    z-index:9998;
+
     color: var(--text-muted);
 }
 
@@ -294,7 +277,7 @@ NAVBAR
     align-items:center;
 
     gap:20px;
-    z-index:9999;
+
     padding:18px 24px;
     margin-bottom:40px;
 
@@ -400,7 +383,7 @@ MOBILE
     }
 
     .ivr-navbar {
-
+        z-index: 10000;
         flex-direction: column;
 
         gap: 14px;
