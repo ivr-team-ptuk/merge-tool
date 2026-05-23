@@ -71,7 +71,7 @@ footer {
 
     padding:         0 32px;
 
-    background:      rgba(8, 57, 61, 0.70);
+    background:      rgba(8, 57, 61, 0.40);
     border-bottom:   1px solid var(--border);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
