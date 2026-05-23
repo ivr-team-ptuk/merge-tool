@@ -373,12 +373,12 @@ MOBILE
 @media (max-width: 900px) {
 
     .hero h1 {
-
+        padding-top: 100;
         font-size: 38px;
     }
 
     .hero p {
-
+        padding-top: 100;
         font-size: 18px;
     }
 
