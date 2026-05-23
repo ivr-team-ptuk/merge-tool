@@ -53,6 +53,21 @@ html, body, [data-testid="stAppViewContainer"] {
 }
 
 /* =========================
+PAGE WIDTH
+========================= */
+
+.block-container {
+
+    max-width: 1400px;
+
+    padding-left: 3rem;
+
+    padding-right: 3rem;
+
+    margin: auto;
+}
+
+/* =========================
 SIDEBAR
 ========================= */
 
