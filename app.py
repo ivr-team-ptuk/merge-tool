@@ -92,7 +92,7 @@ function toggleNavbar() {{
 
         <div class="ivr-navbar">
 
-            <a href="https://ivr-home-page.streamlit.app"
+            <a href="https://ivr-home-page.streamlit.app" target="_blank"
             class="nav-logo">
                 <img
                     src="https://raw.githubusercontent.com/ivr-team-ptuk/home-page/main/Black_Square-01.svg"
