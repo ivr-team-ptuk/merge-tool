@@ -41,7 +41,7 @@ st.markdown(f"""
     <div class="nav-links">
         <a href="https://ivr-watermark-tool.streamlit.app">تعليم الملفات</a>
         <a href="https://ivr-merge-tool.streamlit.app">دمج وتقسيم الملفات</a>
-        <a href="https://ivr-imagetopdf-tool.streamlit.app">الصور إلى PDF</a>
+        <a href="https://ivr-imagetopdf-tool.streamlit.app">الصور ↔ PDF</a>
     </div>
 </nav>
 """, unsafe_allow_html=True)
